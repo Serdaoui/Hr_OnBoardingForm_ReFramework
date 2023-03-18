@@ -1,0 +1,841 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Extracting_Data" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/cv" xmlns:p1="http://schemas.uipath.com/workflow/activities/ocr" xmlns:p2="http://schemas.uipath.com/workflow/activities/intelligentocr" xmlns:p3="http://schemas.uipath.com/workflow/activities/intelligentocr/extraction" xmlns:p4="http://schemas.uipath.com/workflow/activities/documentunderstanding-ml" xmlns:p5="http://schemas.uipath.com/workflow/activities/document-processing-contracts/extraction" xmlns:p6="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:p7="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:p8="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.ComponentModel;assembly=System.ComponentModel.TypeConverter" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Drawing;assembly=System.Drawing.Common" xmlns:sd1="clr-namespace:System.Drawing;assembly=System.Drawing.Primitives" xmlns:this="clr-namespace:" xmlns:uc="clr-namespace:UiPath.CV;assembly=UiPath.CV" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="out_firstName" Type="OutArgument(x:String)" />
+    <x:Property Name="out_LastName" Type="OutArgument(x:String)" />
+    <x:Property Name="out_DOB" Type="OutArgument(x:String)" />
+    <x:Property Name="out_phoneNumber" Type="OutArgument(x:String)" />
+    <x:Property Name="out_Designation" Type="OutArgument(x:String)" />
+    <x:Property Name="out_Gender" Type="OutArgument(x:String)" />
+    <x:Property Name="in_FilePath" Type="InArgument(x:String)" />
+  </x:Members>
+  <this:Extracting_Data.in_FilePath>
+    <InArgument x:TypeArguments="x:String" />
+  </this:Extracting_Data.in_FilePath>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>389.6,543.2</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>Extracting_Data_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="47">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>UiPath.DocumentProcessing.Contracts.Taxonomy</x:String>
+      <x:String>UiPath.IntelligentOCR.Activities.TaxonomyManagement</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>UiPath.IntelligentOCR.Activities.Digitization</x:String>
+      <x:String>UiPath.DocumentProcessing.Contracts.Dom</x:String>
+      <x:String>UiPath.Vision.OCR</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>UiPath.OCR.Contracts</x:String>
+      <x:String>UiPath.OCR.Activities</x:String>
+      <x:String>UiPath.OCR.Contracts.Activities</x:String>
+      <x:String>UiPath.DocumentProcessing.Contracts.Results</x:String>
+      <x:String>UiPath.IntelligentOCR.Activities.DataExtraction</x:String>
+      <x:String>UiPath.DocumentProcessing.Contracts.DataExtraction</x:String>
+      <x:String>UiPath.DocumentUnderstanding.ML.Activities</x:String>
+      <x:String>UiPath.DocumentProcessing.Contracts</x:String>
+      <x:String>UiPath.DocumentUnderstanding.ML.Activities.Editors</x:String>
+      <x:String>UiPath.IntelligentOCR.Activities.ValidationStation</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+      <x:String>UiPath.CV</x:String>
+      <x:String>UiPath.Shared.ObjectLibrary</x:String>
+      <x:String>UiPath.CV.Activities</x:String>
+      <x:String>UiPath.CV.Activities.Interfaces</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="50">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>UiPath.DocumentProcessing.Contracts</AssemblyReference>
+      <AssemblyReference>UiPath.IntelligentOCR.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Core</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Contracts</AssemblyReference>
+      <AssemblyReference>UiPath.Vision.Core</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>UiPath.DocumentUnderstanding.ML.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.CV</AssemblyReference>
+      <AssemblyReference>UiPath.CV.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities.Design</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Extracting_Data" sap:VirtualizedContainerService.HintSize="400,478.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="337.6,52.8" sap2010:WorkflowViewState.IdRef="CommentOut_3">
+      <ui:CommentOut.Body>
+        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="400,172" sap2010:WorkflowViewState.IdRef="Sequence_7">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap:VirtualizedContainerService.HintSize="337.6,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+            <Assign.To>
+              <OutArgument x:TypeArguments="s:String[]">[in_FilePath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="s:String[]">[Directory.GetFiles("C:\Users\pc\Documents\UiPath\Hr_OnBoarding_OCR_REFramework\documents")]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </Sequence>
+      </ui:CommentOut.Body>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:CommentOut>
+    <ui:StartProcess Arguments="{x:Null}" WorkingDirectory="{x:Null}" DisplayName="Start Process" FileName="[in_FilePath]" sap:VirtualizedContainerService.HintSize="337.6,88" sap2010:WorkflowViewState.IdRef="StartProcess_1" />
+    <p:CVScope ContinueOnError="{x:Null}" DelayBefore="{x:Null}" ScopeId="{x:Null}" Server="{x:Null}" CvMethod="ElementDetection, OCR" DesignTimeCacheId="22f03746-b5f8-4933-84aa-506b0d715d15" DisplayName="CV Screen Scope Employee informations" sap:VirtualizedContainerService.HintSize="337.6,52.8" sap2010:WorkflowViewState.IdRef="CVScope_1" SendOnPremData="False" Version="V5">
+      <p:CVScope.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="CVSessionData" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_5">
+            <p:CvGetTextWithDescriptor DelayScreenshotAfterScroll="{x:Null}" Descriptor="[&quot;Target: AnyText (221,135,44,17)&quot; +&#xA;&quot;Anchor: Text 'First Name:' (80,137,102,15)&quot;]" DesignTimeCacheId="22f03746-b5f8-4933-84aa-506b0d715d15" DesignTimeScaleFactor="1.25" DisplayName="CV Get Text - First Name" sap:VirtualizedContainerService.HintSize="400,52.8" sap2010:WorkflowViewState.IdRef="CvGetTextWithDescriptor_1" InformativeScreenshot="49cb7240ea8627d28102f85590741a3d" NumberOfScrolls="2" RefreshBefore="True" Result="[out_firstName]" ScrollDirection="None" Version="V5">
+              <p:CvGetTextWithDescriptor.DesignTimeDescriptor>
+                <uc:CvDescriptor Id="7a423197-07e0-4095-921c-634e2a7fa82c">
+                  <uc:CvDescriptor.Anchors>
+                    <x:Array Type="uc:CvElementDescriptor">
+                      <uc:CvElementDescriptor CellExtraInfo="{x:Null}" DesignTimeArea="80, 137, 102, 15" ElementType="Text" Text="First Name:" />
+                    </x:Array>
+                  </uc:CvDescriptor.Anchors>
+                  <uc:CvDescriptor.Target>
+                    <uc:CvElementDescriptor CellExtraInfo="{x:Null}" DesignTimeArea="221, 135, 44, 17" ElementType="AnyText" />
+                  </uc:CvDescriptor.Target>
+                </uc:CvDescriptor>
+              </p:CvGetTextWithDescriptor.DesignTimeDescriptor>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </p:CvGetTextWithDescriptor>
+            <p:CvGetTextWithDescriptor DelayScreenshotAfterScroll="{x:Null}" Descriptor="[&quot;Target: AnyText (720,136,45,16)&quot; +&#xA;&quot;Anchor: Text 'Last Name:' (606,137,100,15)&quot;]" DesignTimeCacheId="22f03746-b5f8-4933-84aa-506b0d715d15" DesignTimeScaleFactor="1.25" DisplayName="CV Get Text - Last Name" sap:VirtualizedContainerService.HintSize="400,52.8" sap2010:WorkflowViewState.IdRef="CvGetTextWithDescriptor_2" InformativeScreenshot="6c111b597e87b2534230ccdfa8b7188a" NumberOfScrolls="2" RefreshBefore="True" Result="[out_LastName]" ScrollDirection="None" Version="V5">
+              <p:CvGetTextWithDescriptor.DesignTimeDescriptor>
+                <uc:CvDescriptor Id="a237023b-98fe-43d3-96e4-ccd18cccf70f">
+                  <uc:CvDescriptor.Anchors>
+                    <x:Array Type="uc:CvElementDescriptor">
+                      <uc:CvElementDescriptor CellExtraInfo="{x:Null}" DesignTimeArea="606, 137, 100, 15" ElementType="Text" Text="Last Name:" />
+                    </x:Array>
+                  </uc:CvDescriptor.Anchors>
+                  <uc:CvDescriptor.Target>
+                    <uc:CvElementDescriptor CellExtraInfo="{x:Null}" DesignTimeArea="720, 136, 45, 16" ElementType="AnyText" />
+                  </uc:CvDescriptor.Target>
+                </uc:CvDescriptor>
+              </p:CvGetTextWithDescriptor.DesignTimeDescriptor>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </p:CvGetTextWithDescriptor>
+            <p:CvGetTextWithDescriptor DelayScreenshotAfterScroll="{x:Null}" Descriptor="[&quot;Target: AnyText (733,187,95,17)&quot; +&#xA;&quot;Anchor: Text 'Date of Birth:' (608,187,119,15)&quot;]" DesignTimeCacheId="22f03746-b5f8-4933-84aa-506b0d715d15" DesignTimeScaleFactor="1.25" DisplayName="CV Get Text - Date of Birthday" sap:VirtualizedContainerService.HintSize="400,52.8" sap2010:WorkflowViewState.IdRef="CvGetTextWithDescriptor_3" InformativeScreenshot="c4eac48083ab831df7a24fcd99cf61cf" NumberOfScrolls="2" RefreshBefore="True" Result="[out_DOB]" ScrollDirection="None" Version="V5">
+              <p:CvGetTextWithDescriptor.DesignTimeDescriptor>
+                <uc:CvDescriptor Id="8312f6f8-712a-45bd-a382-7e48e7718852">
+                  <uc:CvDescriptor.Anchors>
+                    <x:Array Type="uc:CvElementDescriptor">
+                      <uc:CvElementDescriptor CellExtraInfo="{x:Null}" DesignTimeArea="608, 187, 119, 15" ElementType="Text" Text="Date of Birth:" />
+                    </x:Array>
+                  </uc:CvDescriptor.Anchors>
+                  <uc:CvDescriptor.Target>
+                    <uc:CvElementDescriptor CellExtraInfo="{x:Null}" DesignTimeArea="733, 187, 95, 17" ElementType="AnyText" />
+                  </uc:CvDescriptor.Target>
+                </uc:CvDescriptor>
+              </p:CvGetTextWithDescriptor.DesignTimeDescriptor>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </p:CvGetTextWithDescriptor>
+            <p:CvGetTextWithDescriptor DelayScreenshotAfterScroll="{x:Null}" Descriptor="[&quot;Target: AnyWordGroup (242,292,119,16)&quot; +&#xA;&quot;Anchor: Text 'Phone Number:' (72,290,138,15)&quot;]" DesignTimeCacheId="22f03746-b5f8-4933-84aa-506b0d715d15" DesignTimeScaleFactor="1.25" DisplayName="CV Get Text - Phone Number" sap:VirtualizedContainerService.HintSize="400,52.8" sap2010:WorkflowViewState.IdRef="CvGetTextWithDescriptor_4" InformativeScreenshot="a49617594f9e0ff7360621090f6c21b5" NumberOfScrolls="2" RefreshBefore="True" Result="[out_phoneNumber]" ScrollDirection="None" Version="V5">
+              <p:CvGetTextWithDescriptor.DesignTimeDescriptor>
+                <uc:CvDescriptor Id="e24d4395-bc7a-4d8d-ac1b-b83522b69763">
+                  <uc:CvDescriptor.Anchors>
+                    <x:Array Type="uc:CvElementDescriptor">
+                      <uc:CvElementDescriptor CellExtraInfo="{x:Null}" DesignTimeArea="72, 290, 138, 15" ElementType="Text" Text="Phone Number:" />
+                    </x:Array>
+                  </uc:CvDescriptor.Anchors>
+                  <uc:CvDescriptor.Target>
+                    <uc:CvElementDescriptor CellExtraInfo="{x:Null}" DesignTimeArea="242, 292, 119, 16" ElementType="AnyWordGroup" />
+                  </uc:CvDescriptor.Target>
+                </uc:CvDescriptor>
+              </p:CvGetTextWithDescriptor.DesignTimeDescriptor>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </p:CvGetTextWithDescriptor>
+            <p:CvGetTextWithDescriptor DelayScreenshotAfterScroll="{x:Null}" Descriptor="[&quot;Target: AnyWordGroup (710,236,86,16)&quot; +&#xA;&quot;Anchor: Text 'Designation:' (608,234,96,19)&quot;]" DesignTimeCacheId="22f03746-b5f8-4933-84aa-506b0d715d15" DesignTimeScaleFactor="1.25" DisplayName="CV Get Text - Designation" sap:VirtualizedContainerService.HintSize="400,52.8" sap2010:WorkflowViewState.IdRef="CvGetTextWithDescriptor_5" InformativeScreenshot="8a0ee5d49920f567aceee7f19e6d4edc" NumberOfScrolls="2" RefreshBefore="True" Result="[out_Designation]" ScrollDirection="None" Version="V5">
+              <p:CvGetTextWithDescriptor.DesignTimeDescriptor>
+                <uc:CvDescriptor Id="2c28d486-5123-49b9-9896-f53b661fc653">
+                  <uc:CvDescriptor.Anchors>
+                    <x:Array Type="uc:CvElementDescriptor">
+                      <uc:CvElementDescriptor CellExtraInfo="{x:Null}" DesignTimeArea="608, 234, 96, 19" ElementType="Text" Text="Designation:" />
+                    </x:Array>
+                  </uc:CvDescriptor.Anchors>
+                  <uc:CvDescriptor.Target>
+                    <uc:CvElementDescriptor CellExtraInfo="{x:Null}" DesignTimeArea="710, 236, 86, 16" ElementType="AnyWordGroup" />
+                  </uc:CvDescriptor.Target>
+                </uc:CvDescriptor>
+              </p:CvGetTextWithDescriptor.DesignTimeDescriptor>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </p:CvGetTextWithDescriptor>
+            <p:CvGetTextWithDescriptor DelayScreenshotAfterScroll="{x:Null}" Descriptor="[&quot;Target: AnyText (682,284,58,15)&quot; +&#xA;&quot;Anchor: Text 'Gender:' (604,284,72,16)&quot;]" DesignTimeCacheId="22f03746-b5f8-4933-84aa-506b0d715d15" DesignTimeScaleFactor="1.25" DisplayName="CV Get Text - Gender" sap:VirtualizedContainerService.HintSize="400,52.8" sap2010:WorkflowViewState.IdRef="CvGetTextWithDescriptor_6" InformativeScreenshot="4fd4272a26b7d780e1fc236be685e206" NumberOfScrolls="2" RefreshBefore="True" Result="[out_Gender]" ScrollDirection="None" Version="V5">
+              <p:CvGetTextWithDescriptor.DesignTimeDescriptor>
+                <uc:CvDescriptor Id="dd593071-94f2-429b-8dcc-7c0b05e84f12">
+                  <uc:CvDescriptor.Anchors>
+                    <x:Array Type="uc:CvElementDescriptor">
+                      <uc:CvElementDescriptor CellExtraInfo="{x:Null}" DesignTimeArea="604, 284, 72, 16" ElementType="Text" Text="Gender:" />
+                    </x:Array>
+                  </uc:CvDescriptor.Anchors>
+                  <uc:CvDescriptor.Target>
+                    <uc:CvElementDescriptor CellExtraInfo="{x:Null}" DesignTimeArea="682, 284, 58, 15" ElementType="AnyText" />
+                  </uc:CvDescriptor.Target>
+                </uc:CvDescriptor>
+              </p:CvGetTextWithDescriptor.DesignTimeDescriptor>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </p:CvGetTextWithDescriptor>
+            <ui:CloseWindow TimeoutMS="{x:Null}" UseWindow="{x:Null}" DisplayName="Close Window Picasa Photo" sap:VirtualizedContainerService.HintSize="400,107.2" sap2010:WorkflowViewState.IdRef="CloseWindow_2" InformativeScreenshot="616ce17cfe6885dde54f94886e24ba73" Selector="&lt;wnd app='picasaphotoviewer.exe' cls='ytWindow' title='*.png - Picasa Photo Viewer' /&gt;" WaitForReady="INTERACTIVE" />
+          </Sequence>
+        </ActivityAction>
+      </p:CVScope.Body>
+      <p:CVScope.DesignTimeCache>
+        <uc:CVCache CvUiElements="{x:Null}" OcrTexts="{x:Null}" DataSent="False" />
+      </p:CVScope.DesignTimeCache>
+      <p:CVScope.DesignTimeCacheContainer>
+        <uc:CvCacheContainer>
+          <uc:CvCacheContainer.Caches>
+            <scg:List x:TypeArguments="uc:CVCache" Capacity="1">
+              <uc:CVCache DataSent="False" DisplayName="Screen CV Get Text - '' (Main)" Id="22f03746-b5f8-4933-84aa-506b0d715d15" InformativeScreenshot="382a5c5566f71c8bb4519055df08b03d" LogicalPosition="380, 70" OcrText="EMPLOYEE INFORMATION SHEET Complete this form for each employee. General Information First Name: Alice Last Name: Snow Date of Birth: 16/03/1991 Address: Suzy Queue 4455 Landing Lange, APT 4 Louisville, KY 40018-1234 Designation: QA Analyste Phone Number: +1 (571) 687-9711 Gender: Female Direct Deposit Information Will this employee be paid by direct deposit? Yes. If so, please complete the Authorization of Direct Deposit form No Tax Information Please attach or specify the following information for this employee: Attach completed federal Form W-4 Attach completed state withholding form. Only applicable if state income tax and filing status/allowances are different from federal Specify any payroll taxes that this employee is exempt from, such as state unemployment, social" Position="380, 70" ScaleFactor="1.25" ScreenshotGuid="a436987d-05e1-467b-a2e2-fd57377571af" ServerVersion="1">
+                <uc:CVCache.CvAnchorRelations>
+                  <scg:List x:TypeArguments="uc:AnchorRelationInfo" Capacity="8">
+                    <uc:AnchorRelationInfo IsTargetText="True" Target="13">
+                      <uc:AnchorRelationInfo.Anchors>
+                        <x:Array Type="x:Int32">
+                          <x:Int32>11</x:Int32>
+                          <x:Int32>12</x:Int32>
+                        </x:Array>
+                      </uc:AnchorRelationInfo.Anchors>
+                    </uc:AnchorRelationInfo>
+                    <uc:AnchorRelationInfo IsTargetText="True" Target="16">
+                      <uc:AnchorRelationInfo.Anchors>
+                        <x:Array Type="x:Int32">
+                          <x:Int32>14</x:Int32>
+                          <x:Int32>15</x:Int32>
+                        </x:Array>
+                      </uc:AnchorRelationInfo.Anchors>
+                    </uc:AnchorRelationInfo>
+                    <uc:AnchorRelationInfo IsTargetText="True" Target="41">
+                      <uc:AnchorRelationInfo.Anchors>
+                        <x:Array Type="x:Int32">
+                          <x:Int32>40</x:Int32>
+                        </x:Array>
+                      </uc:AnchorRelationInfo.Anchors>
+                    </uc:AnchorRelationInfo>
+                    <uc:AnchorRelationInfo IsTargetText="True" Target="20">
+                      <uc:AnchorRelationInfo.Anchors>
+                        <x:Array Type="x:Int32">
+                          <x:Int32>17</x:Int32>
+                          <x:Int32>18</x:Int32>
+                          <x:Int32>19</x:Int32>
+                        </x:Array>
+                      </uc:AnchorRelationInfo.Anchors>
+                    </uc:AnchorRelationInfo>
+                    <uc:AnchorRelationInfo IsTargetText="False" Target="4">
+                      <uc:AnchorRelationInfo.Anchors>
+                        <x:Array Type="x:Int32">
+                          <x:Int32>53</x:Int32>
+                          <x:Int32>54</x:Int32>
+                          <x:Int32>55</x:Int32>
+                          <x:Int32>56</x:Int32>
+                          <x:Int32>57</x:Int32>
+                          <x:Int32>58</x:Int32>
+                          <x:Int32>59</x:Int32>
+                          <x:Int32>60</x:Int32>
+                          <x:Int32>61</x:Int32>
+                          <x:Int32>62</x:Int32>
+                          <x:Int32>63</x:Int32>
+                        </x:Array>
+                      </uc:AnchorRelationInfo.Anchors>
+                    </uc:AnchorRelationInfo>
+                    <uc:AnchorRelationInfo IsTargetText="False" Target="3">
+                      <uc:AnchorRelationInfo.Anchors>
+                        <x:Array Type="x:Int32">
+                          <x:Int32>64</x:Int32>
+                        </x:Array>
+                      </uc:AnchorRelationInfo.Anchors>
+                    </uc:AnchorRelationInfo>
+                    <uc:AnchorRelationInfo IsTargetText="False" Target="2">
+                      <uc:AnchorRelationInfo.Anchors>
+                        <x:Array Type="x:Int32">
+                          <x:Int32>82</x:Int32>
+                          <x:Int32>83</x:Int32>
+                          <x:Int32>84</x:Int32>
+                          <x:Int32>85</x:Int32>
+                          <x:Int32>86</x:Int32>
+                          <x:Int32>87</x:Int32>
+                          <x:Int32>88</x:Int32>
+                        </x:Array>
+                      </uc:AnchorRelationInfo.Anchors>
+                    </uc:AnchorRelationInfo>
+                  </scg:List>
+                </uc:CVCache.CvAnchorRelations>
+                <uc:CVCache.CvUiElements>
+                  <scg:List x:TypeArguments="uc:CvElementInfo" Capacity="128">
+                    <uc:CvElementInfo Category="Icon" Region="77, 647, 20, 20" />
+                    <uc:CvElementInfo Category="CheckBox" Region="79, 571, 17, 16" />
+                    <uc:CvElementInfo Category="CheckBox" Region="80, 591, 11, 12" />
+                    <uc:CvElementInfo Category="CheckBox" Region="80, 456, 11, 12" />
+                    <uc:CvElementInfo Category="CheckBox" Region="80, 423, 11, 12" />
+                    <uc:CvElementInfo Category="Cell" Region="70, 261, 529, 80" />
+                    <uc:CvElementInfo Category="Icon" Confidence="Runtime" Region="78, 421, 15, 16" />
+                    <uc:CvElementInfo Category="Icon" Confidence="Runtime" Region="79, 454, 14, 15" />
+                    <uc:CvElementInfo Category="Icon" Confidence="Runtime" Region="76, 372, 22, 21" />
+                    <uc:CvElementInfo Category="Icon" Confidence="Runtime" Region="77, 568, 19, 19" />
+                    <uc:CvElementInfo Category="CheckBox" Confidence="Runtime" Region="80, 558, 11, 11" />
+                    <uc:CvElementInfo Category="Icon" Confidence="Runtime" Region="79, 590, 12, 13" />
+                    <uc:CvElementInfo Category="InputBox" Confidence="Runtime" Region="89, 84, 873, 30" />
+                    <uc:CvElementInfo Category="Icon" Confidence="Runtime" Region="164, 232, 24, 19" />
+                    <uc:CvElementInfo Category="Icon" Confidence="Runtime" Region="78, 556, 16, 15" />
+                    <uc:CvElementInfo Category="ArrowButton" Confidence="Runtime" Region="556, 201, 19, 20" />
+                    <uc:CvElementInfo Category="InputBox" Confidence="Runtime" Region="81, 345, 884, 28" />
+                    <uc:CvElementInfo Category="Button" Confidence="Runtime" Region="78, 421, 15, 16" />
+                    <uc:CvElementInfo Category="CheckBox" Confidence="Runtime" Region="80, 649, 12, 13" />
+                    <uc:CvElementInfo Category="Icon" Confidence="Runtime" Region="558, 202, 16, 18" />
+                    <uc:CvElementInfo Category="CheckBox" Confidence="Runtime" Region="76, 373, 20, 20" />
+                    <uc:CvElementInfo Category="Button" Confidence="Runtime" Region="79, 455, 14, 14" />
+                    <uc:CvElementInfo Category="Button" Confidence="Runtime" Region="76, 372, 23, 22" />
+                    <uc:CvElementInfo Category="Button" Confidence="Runtime" Region="80, 591, 12, 11" />
+                    <uc:CvElementInfo Category="Icon" Confidence="Runtime" Region="150, 418, 18, 19" />
+                    <uc:CvElementInfo Category="Icon" Confidence="Runtime" Region="107, 451, 25, 18" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="256, 371, 687, 32" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="182, 547, 753, 29" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="441, 197, 65, 32" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="152, 478, 800, 28" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="71, 114, 146, 53" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="596, 322, 357, 22" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="44, 641, 520, 27" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="210, 639, 746, 27" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="601, 268, 356, 73" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="61, 560, 903, 92" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="515, 200, 41, 29" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="180, 124, 412, 46" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="599, 108, 355, 73" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="81, 112, 516, 76" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="955, 656, 7, 14" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="592, 112, 359, 28" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="363, 196, 72, 36" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="73, 645, 29, 22" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="74, 450, 33, 26" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="440, 196, 77, 75" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="34, 580, 874, 28" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="72, 155, 135, 42" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="612, 114, 332, 233" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="95, 448, 720, 28" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="64, 606, 566, 29" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="60, 376, 889, 96" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="912, 636, 48, 31" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="73, 417, 32, 32" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="69, 123, 111, 82" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="440, 220, 58, 45" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="72, 550, 33, 38" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="104, 112, 484, 35" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="236, 199, 64, 31" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="888, 624, 69, 17" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="108, 507, 846, 34" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="365, 220, 68, 46" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="192, 130, 22, 64" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="600, 270, 355, 35" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="606, 123, 349, 37" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="74, 372, 588, 32" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="650, 506, 304, 20" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="72, 199, 111, 31" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="300, 228, 143, 25" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="68, 526, 876, 64" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="440, 183, 67, 18" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="667, 479, 255, 28" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="103, 413, 41, 31" />
+                    <uc:CvElementInfo Category="Cell" Confidence="Runtime" Region="76, 165, 104, 60" />
+                  </scg:List>
+                </uc:CVCache.CvUiElements>
+                <uc:CVCache.OcrTexts>
+                  <scg:List x:TypeArguments="uc:OcrTextInfo" Capacity="115">
+                    <uc:OcrTextInfo Region="273, 10, 152, 23" Text="EMPLOYEE" />
+                    <uc:OcrTextInfo Region="432, 10, 213, 23" Text="INFORMATION" />
+                    <uc:OcrTextInfo Region="654, 10, 93, 23" Text="SHEET" />
+                    <uc:OcrTextInfo Region="324, 40, 92, 20" Text="Complete" />
+                    <uc:OcrTextInfo Region="420, 40, 36, 17" Text="this" />
+                    <uc:OcrTextInfo Region="462, 40, 46, 17" Text="form" />
+                    <uc:OcrTextInfo Region="514, 40, 29, 18" Text="for" />
+                    <uc:OcrTextInfo Region="548, 40, 45, 17" Text="each" />
+                    <uc:OcrTextInfo Region="599, 40, 100, 22" Text="employee." />
+                    <uc:OcrTextInfo Region="80, 86, 97, 20" Text="General" />
+                    <uc:OcrTextInfo Region="184, 86, 153, 20" Text="Information" />
+                    <uc:OcrTextInfo Region="80, 137, 41, 15" Text="First" />
+                    <uc:OcrTextInfo Region="126, 138, 56, 14" Text="Name:" />
+                    <uc:OcrTextInfo Region="221, 135, 44, 17" Text="Alice" />
+                    <uc:OcrTextInfo Region="606, 137, 39, 15" Text="Last" />
+                    <uc:OcrTextInfo Region="648, 138, 58, 14" Text="Name:" />
+                    <uc:OcrTextInfo Region="720, 136, 45, 16" Text="Snow" />
+                    <uc:OcrTextInfo Region="608, 187, 40, 15" Text="Date" />
+                    <uc:OcrTextInfo Region="653, 187, 20, 14" Text="of" />
+                    <uc:OcrTextInfo Region="677, 187, 50, 15" Text="Birth:" />
+                    <uc:OcrTextInfo Region="733, 187, 95, 17" Text="16/03/1991" />
+                    <uc:OcrTextInfo Region="79, 202, 75, 16" Text="Address:" />
+                    <uc:OcrTextInfo Region="185, 204, 40, 17" Text="Suzy" />
+                    <uc:OcrTextInfo Region="240, 204, 52, 16" Text="Queue" />
+                    <uc:OcrTextInfo Region="308, 204, 42, 14" Text="4455" />
+                    <uc:OcrTextInfo Region="366, 204, 62, 18" Text="Landing" />
+                    <uc:OcrTextInfo Region="444, 204, 54, 16" Text="Lange," />
+                    <uc:OcrTextInfo Region="513, 204, 33, 14" Text="APT" />
+                    <uc:OcrTextInfo Region="560, 204, 11, 14" Text="4" />
+                    <uc:OcrTextInfo Region="80, 234, 80, 17" Text="Louisville," />
+                    <uc:OcrTextInfo Region="164, 234, 22, 14" Text="KY" />
+                    <uc:OcrTextInfo Region="191, 234, 100, 14" Text="40018-1234" />
+                    <uc:OcrTextInfo Region="608, 234, 96, 19" Text="Designation:" />
+                    <uc:OcrTextInfo Region="710, 236, 24, 13" Text="QA" />
+                    <uc:OcrTextInfo Region="736, 236, 60, 16" Text="Analyste" />
+                    <uc:OcrTextInfo Region="72, 290, 56, 15" Text="Phone" />
+                    <uc:OcrTextInfo Region="132, 290, 78, 15" Text="Number:" />
+                    <uc:OcrTextInfo Region="242, 292, 16, 12" Text="+1" />
+                    <uc:OcrTextInfo Region="263, 292, 35, 16" Text="(571)" />
+                    <uc:OcrTextInfo Region="300, 292, 61, 14" Text="687-9711" />
+                    <uc:OcrTextInfo Region="604, 284, 72, 16" Text="Gender:" />
+                    <uc:OcrTextInfo Region="682, 284, 58, 15" Text="Female" />
+                    <uc:OcrTextInfo Region="80, 347, 76, 20" Text="Direct" />
+                    <uc:OcrTextInfo Region="164, 347, 96, 24" Text="Deposit" />
+                    <uc:OcrTextInfo Region="265, 347, 152, 20" Text="Information" />
+                    <uc:OcrTextInfo Region="77, 373, 32, 20" Text="Will" />
+                    <uc:OcrTextInfo Region="114, 378, 30, 15" Text="this" />
+                    <uc:OcrTextInfo Region="148, 378, 79, 18" Text="employee" />
+                    <uc:OcrTextInfo Region="232, 378, 20, 15" Text="be" />
+                    <uc:OcrTextInfo Region="256, 378, 34, 18" Text="paid" />
+                    <uc:OcrTextInfo Region="296, 378, 20, 18" Text="by" />
+                    <uc:OcrTextInfo Region="320, 378, 48, 15" Text="direct" />
+                    <uc:OcrTextInfo Region="371, 378, 68, 18" Text="deposit?" />
+                    <uc:OcrTextInfo Region="108, 420, 34, 15" Text="Yes." />
+                    <uc:OcrTextInfo Region="152, 420, 15, 15" Text="If" />
+                    <uc:OcrTextInfo Region="170, 423, 24, 14" Text="so," />
+                    <uc:OcrTextInfo Region="200, 420, 52, 19" Text="please" />
+                    <uc:OcrTextInfo Region="256, 420, 74, 18" Text="complete" />
+                    <uc:OcrTextInfo Region="334, 420, 28, 15" Text="the" />
+                    <uc:OcrTextInfo Region="365, 420, 108, 14" Text="Authorization" />
+                    <uc:OcrTextInfo Region="478, 420, 17, 15" Text="of" />
+                    <uc:OcrTextInfo Region="499, 420, 48, 14" Text="Direct" />
+                    <uc:OcrTextInfo Region="552, 420, 61, 17" Text="Deposit" />
+                    <uc:OcrTextInfo Region="617, 420, 38, 15" Text="form" />
+                    <uc:OcrTextInfo Region="108, 453, 22, 14" Text="No" />
+                    <uc:OcrTextInfo Region="79, 482, 48, 20" Text="Tax" />
+                    <uc:OcrTextInfo Region="132, 482, 152, 20" Text="Information" />
+                    <uc:OcrTextInfo Region="79, 510, 52, 18" Text="Please" />
+                    <uc:OcrTextInfo Region="136, 513, 50, 15" Text="attach" />
+                    <uc:OcrTextInfo Region="192, 516, 18, 11" Text="or" />
+                    <uc:OcrTextInfo Region="212, 513, 57, 18" Text="specify" />
+                    <uc:OcrTextInfo Region="273, 513, 28, 15" Text="the" />
+                    <uc:OcrTextInfo Region="305, 512, 72, 19" Text="following" />
+                    <uc:OcrTextInfo Region="381, 513, 92, 15" Text="information" />
+                    <uc:OcrTextInfo Region="479, 513, 24, 15" Text="for" />
+                    <uc:OcrTextInfo Region="506, 513, 31, 15" Text="this" />
+                    <uc:OcrTextInfo Region="540, 512, 85, 19" Text="employee:" />
+                    <uc:OcrTextInfo Region="108, 555, 52, 15" Text="Attach" />
+                    <uc:OcrTextInfo Region="165, 555, 84, 18" Text="completed" />
+                    <uc:OcrTextInfo Region="253, 555, 56, 15" Text="federal" />
+                    <uc:OcrTextInfo Region="315, 556, 41, 14" Text="Form" />
+                    <uc:OcrTextInfo Region="360, 556, 35, 14" Text="W-4" />
+                    <uc:OcrTextInfo Region="108, 587, 52, 15" Text="Attach" />
+                    <uc:OcrTextInfo Region="165, 587, 84, 18" Text="completed" />
+                    <uc:OcrTextInfo Region="254, 588, 41, 14" Text="state" />
+                    <uc:OcrTextInfo Region="300, 587, 92, 18" Text="withholding" />
+                    <uc:OcrTextInfo Region="397, 587, 44, 15" Text="form." />
+                    <uc:OcrTextInfo Region="447, 587, 38, 18" Text="Only" />
+                    <uc:OcrTextInfo Region="488, 587, 82, 18" Text="applicable" />
+                    <uc:OcrTextInfo Region="574, 587, 14, 15" Text="if" />
+                    <uc:OcrTextInfo Region="590, 588, 41, 15" Text="state" />
+                    <uc:OcrTextInfo Region="635, 587, 60, 15" Text="income" />
+                    <uc:OcrTextInfo Region="699, 588, 27, 14" Text="tax" />
+                    <uc:OcrTextInfo Region="729, 587, 32, 15" Text="and" />
+                    <uc:OcrTextInfo Region="764, 587, 40, 19" Text="filing" />
+                    <uc:OcrTextInfo Region="108, 614, 145, 17" Text="status/allowances" />
+                    <uc:OcrTextInfo Region="256, 617, 28, 12" Text="are" />
+                    <uc:OcrTextInfo Region="288, 614, 70, 15" Text="different" />
+                    <uc:OcrTextInfo Region="361, 614, 39, 15" Text="from" />
+                    <uc:OcrTextInfo Region="404, 614, 58, 15" Text="federal" />
+                    <uc:OcrTextInfo Region="108, 646, 60, 18" Text="Specify" />
+                    <uc:OcrTextInfo Region="172, 649, 31, 15" Text="any" />
+                    <uc:OcrTextInfo Region="208, 646, 54, 19" Text="payroll" />
+                    <uc:OcrTextInfo Region="266, 647, 44, 14" Text="taxes" />
+                    <uc:OcrTextInfo Region="315, 646, 35, 15" Text="that" />
+                    <uc:OcrTextInfo Region="352, 646, 31, 15" Text="this" />
+                    <uc:OcrTextInfo Region="388, 646, 78, 18" Text="employee" />
+                    <uc:OcrTextInfo Region="471, 647, 14, 14" Text="is" />
+                    <uc:OcrTextInfo Region="490, 647, 61, 17" Text="exempt" />
+                    <uc:OcrTextInfo Region="555, 646, 44, 17" Text="from," />
+                    <uc:OcrTextInfo Region="604, 646, 38, 15" Text="such" />
+                    <uc:OcrTextInfo Region="647, 649, 19, 12" Text="as" />
+                    <uc:OcrTextInfo Region="670, 647, 41, 14" Text="state" />
+                    <uc:OcrTextInfo Region="716, 646, 126, 18" Text="unemployment," />
+                    <uc:OcrTextInfo Region="848, 646, 45, 15" Text="social" />
+                  </scg:List>
+                </uc:CVCache.OcrTexts>
+              </uc:CVCache>
+            </scg:List>
+          </uc:CvCacheContainer.Caches>
+        </uc:CvCacheContainer>
+      </p:CVScope.DesignTimeCacheContainer>
+      <p:CVScope.OCREngine>
+        <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd1:Rectangle, x:String))">
+          <ActivityFunc.Argument>
+            <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
+          </ActivityFunc.Argument>
+          <p1:UiPathScreenOCR ApiKey="{x:Null}" Endpoint="{x:Null}" Output="{x:Null}" PredictionId="{x:Null}" Text="{x:Null}" UseLocalServer="{x:Null}" ComputeSkewAngle="False" ExtractWords="True" sap:VirtualizedContainerService.HintSize="200,24.8" sap2010:WorkflowViewState.IdRef="UiPathScreenOCR_1" Image="[Image]" Language="en" Profile="Screen" Scale="1" Timeout="100000" />
+        </ActivityFunc>
+      </p:CVScope.OCREngine>
+      <p:CVScope.Target>
+        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="c22f0fdd-ec3b-446e-9334-1dc9c89704d2" InformativeScreenshot="14c70889718fe56f1c9c8ec1a754b5c1" Selector="&lt;wnd app='picasaphotoviewer.exe' cls='ytWindow' title='*.png - Picasa Photo Viewer' /&gt;&lt;ctrl name='*.png - Picasa Photo Viewer' role='client' /&gt;" WaitForReady="INTERACTIVE">
+          <ui:Target.TimeoutMS>
+            <InArgument x:TypeArguments="x:Int32" />
+          </ui:Target.TimeoutMS>
+        </ui:Target>
+      </p:CVScope.Target>
+      <p:CVScope.UseLocalServer>
+        <InArgument x:TypeArguments="x:Boolean" />
+      </p:CVScope.UseLocalServer>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </p:CVScope>
+    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="337.6,52.8" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+      <ui:CommentOut.Body>
+        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="1042.4,1768" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:ForEach x:TypeArguments="x:Char" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="980,1656" sap2010:WorkflowViewState.IdRef="ForEach`1_4" Values="[in_FilePath]">
+            <ui:ForEach.Body>
+              <ActivityAction x:TypeArguments="x:Char">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="x:Char" Name="file" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="944.8,1531.2" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                  <Sequence.Variables>
+                    <Variable x:TypeArguments="p8:DocumentTaxonomy" Name="taxonomy" />
+                    <Variable x:TypeArguments="p7:Document" Name="Doc_Model" />
+                    <Variable x:TypeArguments="x:String" Name="Doc_Text" />
+                    <Variable x:TypeArguments="p6:ExtractionResult" Name="extractionResults" />
+                    <Variable x:TypeArguments="p6:ExtractionResult" Name="validatedResults" />
+                  </Sequence.Variables>
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <p2:LoadTaxonomy DisplayName="Load Taxonomy" sap:VirtualizedContainerService.HintSize="882.4,105.6" sap2010:WorkflowViewState.IdRef="LoadTaxonomy_1" Taxonomy="[taxonomy]" />
+                  <p2:DigitizeDocument ApplyOcrMigrated="True" ApplyOcrOnPdf="Auto" DegreeOfParallelism="-1" DetectCheckboxes="True" DisplayName="Digitize Document" DocumentObjectModel="[Doc_Model]" DocumentPath="[file.ToString]" DocumentText="[Doc_Text]" ForceApplyOCR="False" sap:VirtualizedContainerService.HintSize="882.4,300" sap2010:WorkflowViewState.IdRef="DigitizeDocument_1">
+                    <p2:DigitizeDocument.OCREngine>
+                      <ActivityFunc x:TypeArguments="sd:Image, x:String, scg:IEnumerable(scg:KeyValuePair(sd1:Rectangle, x:String))" Argument1="{x:Reference __ReferenceID0}" Argument2="{x:Reference __ReferenceID1}">
+                        <p1:UiPathDocumentOCR Endpoint="{x:Null}" Output="{x:Null}" Text="{x:Null}" UseLocalServer="{x:Null}" ApiKey="AR9wi/N2EnebRMCx8+jFGciKK7tvTmd+GF4iUbwhXydV1twhyecbI85S9/nMpckINfuHQZyhhNUhq3oUMsKXSg==" ComputeSkewAngle="False" DisplayName="UiPath Document OCR" ExtractWords="True" sap:VirtualizedContainerService.HintSize="312,24.8" sap2010:WorkflowViewState.IdRef="UiPathDocumentOCR_1" Language="auto" Profile="None" Scale="1" Timeout="100000">
+                          <p1:UiPathDocumentOCR.Image>
+                            <InArgument x:TypeArguments="sd:Image">
+                              <DelegateArgumentValue x:TypeArguments="sd:Image" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_1">
+                                <DelegateInArgument x:TypeArguments="sd:Image" x:Name="__ReferenceID0" Name="Image" />
+                              </DelegateArgumentValue>
+                            </InArgument>
+                          </p1:UiPathDocumentOCR.Image>
+                          <p1:UiPathDocumentOCR.PredictionId>
+                            <InArgument x:TypeArguments="x:String">
+                              <DelegateArgumentValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_2">
+                                <DelegateInArgument x:TypeArguments="x:String" x:Name="__ReferenceID1" Name="PredictionId" />
+                              </DelegateArgumentValue>
+                            </InArgument>
+                          </p1:UiPathDocumentOCR.PredictionId>
+                        </p1:UiPathDocumentOCR>
+                      </ActivityFunc>
+                    </p2:DigitizeDocument.OCREngine>
+                  </p2:DigitizeDocument>
+                  <p3:DataExtractionScope ClassificationResult="{x:Null}" DisplayName="Data Extraction Scope" DocumentObjectModel="[Doc_Model]" DocumentPath="[file.ToString]" DocumentText="[Doc_Text]" DocumentTypeId="G_Hr.C_Hr.Doc_Hr" ExtractionResult="[extractionResults]" FormatValuesIfPossible="True" sap:VirtualizedContainerService.HintSize="882.4,521.6" sap2010:WorkflowViewState.IdRef="DataExtractionScope_1" Taxonomy="[taxonomy]" TaxonomyConfiguration="{}{&quot;TaxonomyMappings&quot;:{&quot;UIecedff688e8041f4b010b30eaf19a9fa&quot;:{&quot;DocumentTypeMappings&quot;:{&quot;G_Hr.C_Hr.Doc_Hr&quot;:{&quot;FieldMappings&quot;:{&quot;G_Hr.C_Hr.Doc_Hr.FirstName&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.FirstName&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;emp_first_name\&quot;&quot;,&quot;ShouldExtract&quot;:false},&quot;G_Hr.C_Hr.Doc_Hr.LastName&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.LastName&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;emp_last_name\&quot;&quot;,&quot;ShouldExtract&quot;:false},&quot;G_Hr.C_Hr.Doc_Hr.PhoneNumber&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.PhoneNumber&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;phone\&quot;&quot;,&quot;ShouldExtract&quot;:true},&quot;G_Hr.C_Hr.Doc_Hr.DateOfBirth&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.DateOfBirth&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;date_of_birth\&quot;&quot;,&quot;ShouldExtract&quot;:false},&quot;G_Hr.C_Hr.Doc_Hr.Designation&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.Designation&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;emp_ssn\&quot;&quot;,&quot;ShouldExtract&quot;:false},&quot;G_Hr.C_Hr.Doc_Hr.Gender&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.Gender&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:false}},&quot;ExtractorDocumentTypeId&quot;:&quot;\&quot;\&quot;&quot;}}},&quot;UIa06fe49bbd1f48ebb1f86e0fca78eb22&quot;:{&quot;DocumentTypeMappings&quot;:{&quot;G_Hr.C_Hr.Doc_Hr&quot;:{&quot;FieldMappings&quot;:{&quot;G_Hr.C_Hr.Doc_Hr.FirstName&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.FirstName&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;first-name\&quot;&quot;,&quot;ShouldExtract&quot;:true},&quot;G_Hr.C_Hr.Doc_Hr.LastName&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.LastName&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;last-name\&quot;&quot;,&quot;ShouldExtract&quot;:true},&quot;G_Hr.C_Hr.Doc_Hr.PhoneNumber&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.PhoneNumber&quot;,&quot;ExtractorTaxonomyFieldId&quot;:null,&quot;ShouldExtract&quot;:false},&quot;G_Hr.C_Hr.Doc_Hr.DateOfBirth&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.DateOfBirth&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;birth-date\&quot;&quot;,&quot;ShouldExtract&quot;:true},&quot;G_Hr.C_Hr.Doc_Hr.Designation&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.Designation&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;issued-date\&quot;&quot;,&quot;ShouldExtract&quot;:true},&quot;G_Hr.C_Hr.Doc_Hr.Gender&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.Gender&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;sex\&quot;&quot;,&quot;ShouldExtract&quot;:true}},&quot;ExtractorDocumentTypeId&quot;:&quot;\&quot;\&quot;&quot;}}},&quot;UIbabd5d4848ac4e19b2dcd9d66c08af10&quot;:{&quot;DocumentTypeMappings&quot;:{&quot;G_Hr.C_Hr.Doc_Hr&quot;:{&quot;FieldMappings&quot;:{&quot;G_Hr.C_Hr.Doc_Hr.FirstName&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.FirstName&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;first-name\&quot;&quot;,&quot;ShouldExtract&quot;:false},&quot;G_Hr.C_Hr.Doc_Hr.LastName&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.LastName&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;last-name\&quot;&quot;,&quot;ShouldExtract&quot;:false},&quot;G_Hr.C_Hr.Doc_Hr.PhoneNumber&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.PhoneNumber&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;address\&quot;&quot;,&quot;ShouldExtract&quot;:false},&quot;G_Hr.C_Hr.Doc_Hr.DateOfBirth&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.DateOfBirth&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;birth-date\&quot;&quot;,&quot;ShouldExtract&quot;:false},&quot;G_Hr.C_Hr.Doc_Hr.Designation&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.Designation&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;mrz\&quot;&quot;,&quot;ShouldExtract&quot;:false},&quot;G_Hr.C_Hr.Doc_Hr.Gender&quot;:{&quot;OriginalTaxonomyFieldId&quot;:&quot;G_Hr.C_Hr.Doc_Hr.Gender&quot;,&quot;ExtractorTaxonomyFieldId&quot;:&quot;\&quot;sex\&quot;&quot;,&quot;ShouldExtract&quot;:false}},&quot;ExtractorDocumentTypeId&quot;:&quot;\&quot;\&quot;&quot;}}}},&quot;ExtractorMinimumConfidence&quot;:{&quot;UIbabd5d4848ac4e19b2dcd9d66c08af10&quot;:&quot;0&quot;,&quot;UIa06fe49bbd1f48ebb1f86e0fca78eb22&quot;:&quot;0&quot;,&quot;UIecedff688e8041f4b010b30eaf19a9fa&quot;:&quot;0&quot;},&quot;ExtractorsAliases&quot;:{},&quot;DocumentTypeOptionsByExtractor&quot;:{&quot;UIbabd5d4848ac4e19b2dcd9d66c08af10&quot;:[{&quot;FieldId&quot;:&quot;&quot;,&quot;SubOptions&quot;:[{&quot;FieldId&quot;:&quot;document-type&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;last-name&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;first-name&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;birth-place&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;birth-date&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;sex&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;nationality&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;id-no&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;issued-date&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;expiration-date&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;issued-place&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;authority&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;id-no2&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;mrz&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;address&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;state&quot;,&quot;SubOptions&quot;:null}]}],&quot;UIecedff688e8041f4b010b30eaf19a9fa&quot;:[{&quot;FieldId&quot;:&quot;&quot;,&quot;SubOptions&quot;:[{&quot;FieldId&quot;:&quot;emp_first_name&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;emp_last_name&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;midd_initial&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;emp_other_last_name&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;emp_address&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;apt_no&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;emp_city&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;emp_state&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;emp_zip_code&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;date_of_birth&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;emp_ssn&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;emp_email&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;phone&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;citizenship_immg_status&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;alien_reg_no&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;additional_info&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;business_org_name&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;business_rep_first_name&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;business_rep_last_name&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;business_address&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;business_city&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;business_state&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;business_zip&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;emp_new_last_name&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;grant_of_emp_doc_title&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;grant_of_emp_doc_no&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;grant_of_emp_exp_date&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;emp_first_day&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;emp_rehire_date&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;i_94_admission_no&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;foreign_passport_no&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;foreign_pass_country_iss&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;a_doc_title_1&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;a_iss_auth_1&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;a_doc_no_1&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;a_doc_exp_date_1&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;a_doc_title_2&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;a_iss_auth_2&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;a_doc_no_2&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;a_doc_exp_date_2&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;a_doc_title_3&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;a_iss_auth_3&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;a_doc_no_3&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;a_doc_exp_date_3&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;b_doc_title&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;b_iss_auth&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;b_doc_no&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;b_doc_exp_date&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;c_doc_title&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;c_iss_auth&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;c_doc_no&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;c_doc_exp_date&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;emp_signature&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;emp_signature_date&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;business_rep_signature&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;business_rep_sign_date&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;business_rep_title&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;citizen_immg_status_no&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;alien_reg_until_date&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;emp_new_first_name&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;emp_new_midd_i&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;business_rep_signature2&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;alien_reg_no2&quot;,&quot;SubOptions&quot;:null}]}],&quot;UIa06fe49bbd1f48ebb1f86e0fca78eb22&quot;:[{&quot;FieldId&quot;:&quot;&quot;,&quot;SubOptions&quot;:[{&quot;FieldId&quot;:&quot;passport-no&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;last-name&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;first-name&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;nationality&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;sex&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;birth-date&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;birth-place&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;issued-date&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;address&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;authority&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;expiration-date&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;mrz&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;state&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;state-code&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;document-type&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;document-type-code&quot;,&quot;SubOptions&quot;:null},{&quot;FieldId&quot;:&quot;personal-id&quot;,&quot;SubOptions&quot;:null}]}]}}">
+                    <p3:DataExtractionScope.Extractors>
+                      <p4:MachineLearningExtractor Endpoint="{x:Null}" ApiKey="AR9wi/N2EnebRMCx8+jFGciKK7tvTmd+GF4iUbwhXydV1twhyecbI85S9/nMpckINfuHQZyhhNUhq3oUMsKXSg==" Configuration="{}{&quot;Endpoint&quot;:&quot;&quot;,&quot;ApiKey&quot;:&quot;AR9wi/N2EnebRMCx8+jFGciKK7tvTmd+GF4iUbwhXydV1twhyecbI85S9/nMpckINfuHQZyhhNUhq3oUMsKXSg==&quot;,&quot;SelectedMLSkill&quot;:&quot;ml_i9&quot;,&quot;AvailableMLSkills&quot;:[&quot;ml_i9&quot;,&quot;ml_idcards&quot;]}" DisplayName="Machine Learning Extractor" sap:VirtualizedContainerService.HintSize="233.6,195.2" sap2010:WorkflowViewState.IdRef="MachineLearningExtractor_3" PersistenceId="UIecedff688e8041f4b010b30eaf19a9fa" RetryOnFailure="True" SelectedMLSkill="ml_i9" Timeout="100000" UseServerSideOCR="False">
+                        <p4:MachineLearningExtractor.AvailableMLSkills>
+                          <sc:BindingList x:TypeArguments="x:String" AllowEdit="True" AllowNew="False" AllowRemove="True" RaiseListChangedEvents="True">
+                            <x:String>ml_i9</x:String>
+                            <x:String>ml_idcards</x:String>
+                          </sc:BindingList>
+                        </p4:MachineLearningExtractor.AvailableMLSkills>
+                        <p4:MachineLearningExtractor.DocumentBounds>
+                          <InArgument x:TypeArguments="p6:ResultsDocumentBounds">
+                            <DelegateArgumentValue x:TypeArguments="p6:ResultsDocumentBounds" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_4">
+                              <DelegateInArgument x:TypeArguments="p6:ResultsDocumentBounds" Name="DocumentBounds" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.DocumentBounds>
+                        <p4:MachineLearningExtractor.DocumentObjectModel>
+                          <InArgument x:TypeArguments="p7:Document">
+                            <DelegateArgumentValue x:TypeArguments="p7:Document" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_6">
+                              <DelegateInArgument x:TypeArguments="p7:Document" Name="DocumentObjectModel" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.DocumentObjectModel>
+                        <p4:MachineLearningExtractor.DocumentPath>
+                          <InArgument x:TypeArguments="x:String">
+                            <DelegateArgumentValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_7">
+                              <DelegateInArgument x:TypeArguments="x:String" Name="DocumentPath" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.DocumentPath>
+                        <p4:MachineLearningExtractor.DocumentText>
+                          <InArgument x:TypeArguments="x:String">
+                            <DelegateArgumentValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_5">
+                              <DelegateInArgument x:TypeArguments="x:String" Name="DocumentText" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.DocumentText>
+                        <p4:MachineLearningExtractor.ExtractorDocumentType>
+                          <InArgument x:TypeArguments="p5:ExtractorDocumentType">
+                            <DelegateArgumentValue x:TypeArguments="p5:ExtractorDocumentType" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_3">
+                              <DelegateInArgument x:TypeArguments="p5:ExtractorDocumentType" Name="ExtractorDocumentType" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.ExtractorDocumentType>
+                        <p4:MachineLearningExtractor.ExtractorResult>
+                          <OutArgument x:TypeArguments="p5:ExtractorResult">
+                            <DelegateArgumentReference x:TypeArguments="p5:ExtractorResult" sap2010:WorkflowViewState.IdRef="DelegateArgumentReference`1_1">
+                              <DelegateOutArgument x:TypeArguments="p5:ExtractorResult" Name="ExtractorResult" />
+                            </DelegateArgumentReference>
+                          </OutArgument>
+                        </p4:MachineLearningExtractor.ExtractorResult>
+                        <p4:MachineLearningExtractor.PredictionId>
+                          <InArgument x:TypeArguments="x:String">
+                            <DelegateArgumentValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_8">
+                              <DelegateInArgument x:TypeArguments="x:String" Name="PredictionId" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.PredictionId>
+                      </p4:MachineLearningExtractor>
+                      <p4:MachineLearningExtractor Endpoint="{x:Null}" ApiKey="AR9wi/N2EnebRMCx8+jFGciKK7tvTmd+GF4iUbwhXydV1twhyecbI85S9/nMpckINfuHQZyhhNUhq3oUMsKXSg==" Configuration="{}{&quot;Endpoint&quot;:&quot;&quot;,&quot;ApiKey&quot;:&quot;AR9wi/N2EnebRMCx8+jFGciKK7tvTmd+GF4iUbwhXydV1twhyecbI85S9/nMpckINfuHQZyhhNUhq3oUMsKXSg==&quot;,&quot;SelectedMLSkill&quot;:&quot;ml_paspp&quot;,&quot;AvailableMLSkills&quot;:[&quot;ml_i9&quot;,&quot;ml_idcards&quot;,&quot;ml_paspp&quot;]}" DisplayName="Machine Learning Extractor" sap:VirtualizedContainerService.HintSize="233.6,195.2" sap2010:WorkflowViewState.IdRef="MachineLearningExtractor_4" PersistenceId="UIa06fe49bbd1f48ebb1f86e0fca78eb22" RetryOnFailure="True" SelectedMLSkill="ml_paspp" Timeout="100000" UseServerSideOCR="False">
+                        <p4:MachineLearningExtractor.AvailableMLSkills>
+                          <sc:BindingList x:TypeArguments="x:String" AllowEdit="True" AllowNew="False" AllowRemove="True" RaiseListChangedEvents="True">
+                            <x:String>ml_i9</x:String>
+                            <x:String>ml_idcards</x:String>
+                            <x:String>ml_paspp</x:String>
+                          </sc:BindingList>
+                        </p4:MachineLearningExtractor.AvailableMLSkills>
+                        <p4:MachineLearningExtractor.DocumentBounds>
+                          <InArgument x:TypeArguments="p6:ResultsDocumentBounds">
+                            <DelegateArgumentValue x:TypeArguments="p6:ResultsDocumentBounds" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_10">
+                              <DelegateInArgument x:TypeArguments="p6:ResultsDocumentBounds" Name="DocumentBounds" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.DocumentBounds>
+                        <p4:MachineLearningExtractor.DocumentObjectModel>
+                          <InArgument x:TypeArguments="p7:Document">
+                            <DelegateArgumentValue x:TypeArguments="p7:Document" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_12">
+                              <DelegateInArgument x:TypeArguments="p7:Document" Name="DocumentObjectModel" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.DocumentObjectModel>
+                        <p4:MachineLearningExtractor.DocumentPath>
+                          <InArgument x:TypeArguments="x:String">
+                            <DelegateArgumentValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_13">
+                              <DelegateInArgument x:TypeArguments="x:String" Name="DocumentPath" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.DocumentPath>
+                        <p4:MachineLearningExtractor.DocumentText>
+                          <InArgument x:TypeArguments="x:String">
+                            <DelegateArgumentValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_11">
+                              <DelegateInArgument x:TypeArguments="x:String" Name="DocumentText" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.DocumentText>
+                        <p4:MachineLearningExtractor.ExtractorDocumentType>
+                          <InArgument x:TypeArguments="p5:ExtractorDocumentType">
+                            <DelegateArgumentValue x:TypeArguments="p5:ExtractorDocumentType" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_9">
+                              <DelegateInArgument x:TypeArguments="p5:ExtractorDocumentType" Name="ExtractorDocumentType" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.ExtractorDocumentType>
+                        <p4:MachineLearningExtractor.ExtractorResult>
+                          <OutArgument x:TypeArguments="p5:ExtractorResult">
+                            <DelegateArgumentReference x:TypeArguments="p5:ExtractorResult" sap2010:WorkflowViewState.IdRef="DelegateArgumentReference`1_2">
+                              <DelegateOutArgument x:TypeArguments="p5:ExtractorResult" Name="ExtractorResult" />
+                            </DelegateArgumentReference>
+                          </OutArgument>
+                        </p4:MachineLearningExtractor.ExtractorResult>
+                        <p4:MachineLearningExtractor.PredictionId>
+                          <InArgument x:TypeArguments="x:String">
+                            <DelegateArgumentValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_14">
+                              <DelegateInArgument x:TypeArguments="x:String" Name="PredictionId" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.PredictionId>
+                      </p4:MachineLearningExtractor>
+                      <p4:MachineLearningExtractor Endpoint="{x:Null}" ApiKey="AR9wi/N2EnebRMCx8+jFGciKK7tvTmd+GF4iUbwhXydV1twhyecbI85S9/nMpckINfuHQZyhhNUhq3oUMsKXSg==" Configuration="{}{&quot;Endpoint&quot;:&quot;&quot;,&quot;ApiKey&quot;:&quot;AR9wi/N2EnebRMCx8+jFGciKK7tvTmd+GF4iUbwhXydV1twhyecbI85S9/nMpckINfuHQZyhhNUhq3oUMsKXSg==&quot;,&quot;SelectedMLSkill&quot;:&quot;ml_idcards&quot;,&quot;AvailableMLSkills&quot;:[&quot;ml_idcards&quot;]}" DisplayName="Machine Learning Extractor" sap:VirtualizedContainerService.HintSize="233.6,195.2" sap2010:WorkflowViewState.IdRef="MachineLearningExtractor_2" PersistenceId="UIbabd5d4848ac4e19b2dcd9d66c08af10" RetryOnFailure="True" SelectedMLSkill="ml_idcards" Timeout="100000" UseServerSideOCR="False">
+                        <p4:MachineLearningExtractor.AvailableMLSkills>
+                          <sc:BindingList x:TypeArguments="x:String" AllowEdit="True" AllowNew="False" AllowRemove="True" RaiseListChangedEvents="True">
+                            <x:String>ml_idcards</x:String>
+                          </sc:BindingList>
+                        </p4:MachineLearningExtractor.AvailableMLSkills>
+                        <p4:MachineLearningExtractor.DocumentBounds>
+                          <InArgument x:TypeArguments="p6:ResultsDocumentBounds">
+                            <DelegateArgumentValue x:TypeArguments="p6:ResultsDocumentBounds" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_16">
+                              <DelegateInArgument x:TypeArguments="p6:ResultsDocumentBounds" Name="DocumentBounds" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.DocumentBounds>
+                        <p4:MachineLearningExtractor.DocumentObjectModel>
+                          <InArgument x:TypeArguments="p7:Document">
+                            <DelegateArgumentValue x:TypeArguments="p7:Document" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_18">
+                              <DelegateInArgument x:TypeArguments="p7:Document" Name="DocumentObjectModel" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.DocumentObjectModel>
+                        <p4:MachineLearningExtractor.DocumentPath>
+                          <InArgument x:TypeArguments="x:String">
+                            <DelegateArgumentValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_19">
+                              <DelegateInArgument x:TypeArguments="x:String" Name="DocumentPath" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.DocumentPath>
+                        <p4:MachineLearningExtractor.DocumentText>
+                          <InArgument x:TypeArguments="x:String">
+                            <DelegateArgumentValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_17">
+                              <DelegateInArgument x:TypeArguments="x:String" Name="DocumentText" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.DocumentText>
+                        <p4:MachineLearningExtractor.ExtractorDocumentType>
+                          <InArgument x:TypeArguments="p5:ExtractorDocumentType">
+                            <DelegateArgumentValue x:TypeArguments="p5:ExtractorDocumentType" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_15">
+                              <DelegateInArgument x:TypeArguments="p5:ExtractorDocumentType" Name="ExtractorDocumentType" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.ExtractorDocumentType>
+                        <p4:MachineLearningExtractor.ExtractorResult>
+                          <OutArgument x:TypeArguments="p5:ExtractorResult">
+                            <DelegateArgumentReference x:TypeArguments="p5:ExtractorResult" sap2010:WorkflowViewState.IdRef="DelegateArgumentReference`1_3">
+                              <DelegateOutArgument x:TypeArguments="p5:ExtractorResult" Name="ExtractorResult" />
+                            </DelegateArgumentReference>
+                          </OutArgument>
+                        </p4:MachineLearningExtractor.ExtractorResult>
+                        <p4:MachineLearningExtractor.PredictionId>
+                          <InArgument x:TypeArguments="x:String">
+                            <DelegateArgumentValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_20">
+                              <DelegateInArgument x:TypeArguments="x:String" Name="PredictionId" />
+                            </DelegateArgumentValue>
+                          </InArgument>
+                        </p4:MachineLearningExtractor.PredictionId>
+                      </p4:MachineLearningExtractor>
+                    </p3:DataExtractionScope.Extractors>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </p3:DataExtractionScope>
+                  <p2:PresentValidationStation AutomaticExtractionResults="[extractionResults]" DisplayName="Present Validation Station" DocumentObjectModel="[Doc_Model]" DocumentPath="[file.ToString]" DocumentText="[Doc_Text]" sap:VirtualizedContainerService.HintSize="882.4,372" sap2010:WorkflowViewState.IdRef="PresentValidationStation_1" ShowOnlyRelevantPageRange="False" Taxonomy="[taxonomy]" ValidatedExtractionResults="[validatedResults]" />
+                </Sequence>
+              </ActivityAction>
+            </ui:ForEach.Body>
+          </ui:ForEach>
+        </Sequence>
+      </ui:CommentOut.Body>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:CommentOut>
+  </Sequence>
+</Activity>
